@@ -43,10 +43,9 @@ bool isInsideTriangle(const vec3f &v, const vec3f &v1, const vec3f &v2,
          signedArea(v, v3, v1) > 0;
 }
 
-void drawTriangle(
-    const vec3f &v1, const vec3f &v2, const vec3f &v3, TGAImage &image,
-    const TGAColor &color,
-    std::array<std::array<float, imageWidth>, imageHeight> &zbuffer) {
+void drawTriangle(const vec3f &v1, const vec3f &v2, const vec3f &v3,
+                  TGAImage &image, const TGAColor &color,
+                  std::vector<std::vector<float>> &zbuffer) {
   // 获取包围盒
   // 逐像素绘制
   float min_x = std::min(std::min(v1.x, v2.x), v3.x);
@@ -95,7 +94,9 @@ void wireFrameRendering(TGAImage &image, Model &model) {
 
 void drawModelTriangles(TGAImage &image, Model &model) {
   // z-buffer
-  std::array<std::array<float, imageWidth>, imageHeight> z_buffer;
+  std::vector<std::vector<float>> z_buffer(
+      imageWidth,
+      std::vector<float>(imageHeight, -std::numeric_limits<float>::max()));
 
   for (auto f : model.f_vertex_index) {
     TGAColor color = {rand() % 256, rand() % 256, rand() % 256, 255};
