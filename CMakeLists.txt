@@ -9,6 +9,6 @@ include_directories(include)
 add_executable(undead
     src/main.cpp
     src/model.cpp
-    src/math.cpp
+    src/vecmath.cpp
     src/tgaimage.cpp
 )
